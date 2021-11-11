@@ -1,3 +1,6 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!-- Error page displayed when error occurs. -->
+<div class="container text-center border border-danger border-2 p-1 m-auto">
+    <h1><%= message %></h1>
+    <h2><%= error.status %></h2>
+    <pre class="text-start"><%= error.stack %></pre>
+</div>

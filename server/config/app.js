@@ -10,11 +10,12 @@ const expressLayouts = require("express-ejs-layouts");
 // Import our DB config
 const DBConfig = require("./db");
 
-
 // REQUIRE DOTENV TO HIDE OUR SECRETS
 require("dotenv").config();
 
 // DATABASE CONNECTION OPTIONS (Local/Remote)
+// WE ARE PULLING SECRETS FROM OUR .env FILE
+// GROUP MEMBER NOTE: YOU NEED TO ADD THE .env FILE YOURSELF TO ACCESS THE REMOTE DATABASE
 const connectURI = process.env.MONGO_URI ? process.env.MONGO_URI : DBConfig.LocalURI;
 const hostName = process.env.MONGO_URI ? "REMOTE HOST" : "LOCAL HOST";
 const dbSecret = process.env.MONGO_SECRET;
