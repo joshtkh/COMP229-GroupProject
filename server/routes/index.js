@@ -1,24 +1,13 @@
-var express = require('express');
-var router = express.Router();
+// import express & router controllers
+const express = require('express');
+const { DisplayHomePage, DisplayAboutPage, DisplayContactPage } = require("../controllers");
+// setup router for export
+const router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Landing Page' });
-});
-
-/* GET home page. */
-router.get('/about', function(req, res, next) {
-  res.render('about', { title: 'About Page' });
-});
-
-/* GET home page. */
-router.get('/contact', function(req, res, next) {
-  res.render('contact', { title: 'Contact Us Page' });
-});
-
-/* GET home page. */
-router.get('/survey', function(req, res, next) {
-  res.render('survey', { title: 'Create Survey Page' });
-});
+router.get("/", DisplayHomePage);
+router.get('/home', DisplayHomePage);
+router.get('/about', DisplayAboutPage);
+router.get('/contact', DisplayContactPage);
 
 module.exports = router;

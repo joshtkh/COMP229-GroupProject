@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const MongoStore = require('connect-mongo');
 const mongoose = require("mongoose");
+const expressLayouts = require("express-ejs-layouts");
 // Import our DB config
 const DBConfig = require("./db");
 
@@ -56,12 +57,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../../public')));
 app.use(express.static(path.join(__dirname, '../../node_modules')));
 
-// EJS Layouts maybe?
+// EJS Layouts SETUP
+app.use(expressLayouts);
+app.set("layout", "layouts/layout"); // POINT TO OUR DEFAULT LAYOUT FILE
 
 // ROUTER SETUP
 app.use('/', indexRouter);
-
-
 
 // Catch any other route here and give a 404 error
 app.get('*', function(req, res, next) {
@@ -80,5 +81,4 @@ app.use(function(err, req, res, next) {
 });
 
 // Now export the app
-export default app;
-//module.exports = app;
+module.exports = app;
