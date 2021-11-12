@@ -37,10 +37,7 @@ module.exports = {
 
     // PROCESS THE ADD PAGE
     ProcessAddPage: function(req, res, next) {
-        let newItem = new SurveyModel({
-            "surveyName": req.body.surveyName,
-            "surveyDescription": req.body.surveyDescription,
-        });
+        // create a new survey and add it to the database.
     },
 
     // PROCESS THE PAGE TO DELETE A SURVEY

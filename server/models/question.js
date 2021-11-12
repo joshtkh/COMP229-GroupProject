@@ -1,11 +1,11 @@
 // require mongoose
 const mongoose = require("mongoose");
-
 const Schema = mongoose.Schema;
 
 // Create a schema for our questions in MongoDB
 const QuestionSchema = new Schema({
-    
+    questionText: String,
+    questionResponses: [String]
 }, {
     collection: "questions"
 });

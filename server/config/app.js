@@ -34,6 +34,7 @@ const StoreOptions = {
 
 // ROUTER REQUIRES
 const indexRouter = require('../routes/index');
+const surveyRouter = require('../routes/survey');
 
 // DB CONFIGURATION
 mongoose.connect(connectURI);
@@ -62,8 +63,10 @@ app.use(express.static(path.join(__dirname, '../../node_modules')));
 app.use(expressLayouts);
 app.set("layout", "layouts/layout"); // POINT TO OUR DEFAULT LAYOUT FILE
 
-// ROUTER SETUP
+// INDEX SETUP
 app.use('/', indexRouter);
+// SURVEY ROUTER SETUP
+app.use('/survey', surveyRouter);
 
 // Catch any other route here and give a 404 error
 app.get('*', function(req, res, next) {
