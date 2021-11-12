@@ -32,12 +32,35 @@ module.exports = {
     // DISPLAY THE PAGE TO ADD A SURVEY
     DisplayAddPage(req, res, next) {
         // just show the edit view WITHOUT an item.
-        res.render("content/survey/survey-edit", { title: 'Add Contact', page: 'survey/edit', item: '' })
+        res.render("content/survey/survey-edit", { title: 'Add Survey', page: 'survey/edit', item: '' })
     },
 
     // PROCESS THE ADD PAGE
     ProcessAddPage: function(req, res, next) {
         // create a new survey and add it to the database.
+
+        // TODO: Create a new Survey item using the provided details from the user.
+    },
+
+    // PROCESS THE EDIT PAGE
+    ProcessEditPage: function(req, res, next) {
+        let id = req.params.id;
+
+        // Now we need to create a new item using the SurveyModel,
+        // and apply all the changes that the user made to it.
+
+        // TODO: CREATE ITEM HERE
+
+        // After, we need to call SurveyModel.updateOne() to update the
+        // correct Survey.
+        SurveyModel.updateOne({ _id: id }, updatedItem, {}, (err) => {
+            if (err) {
+                console.error(err);
+                res.end(err);
+            }
+            // After it is added, redirect the user back to the list page.
+            res.redirect("/survey/list");
+        })
     },
 
     // PROCESS THE PAGE TO DELETE A SURVEY
