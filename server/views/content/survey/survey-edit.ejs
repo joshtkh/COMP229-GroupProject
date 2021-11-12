@@ -1,0 +1,32 @@
+<div class="container">
+    <h1>
+        <%= title %>
+    </h1>
+    <form method="POST" class="col-lg-6 col-md-10 col-sm-10">
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="surveyName">Survey Name</span>
+            <input id="surveyName" type="text" class="form-control" placeholder="Survey Name"
+                aria-label="Survey Name" aria-describedby="Survey Name" name="surveyName"
+                value="<%= item.surveyName %>" required>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="surveyDescription">Survey Description</span>
+            <input id="surveyDescription" type="text" class="form-control" placeholder="Survey Description"
+                aria-label="Survey Description" aria-describedby="Survey Description" name="surveyDescription"
+                value="<%= item.surveyDescription %>" required>
+        </div>
+
+        <% if (title.search("Edit") > -1 ) { %>
+        <button type="submit" id="submitButton" class="btn btn-primary">
+            <i class="fas fa-edit fa-lg"></i>Edit
+        </button>
+        <% } else { %>
+         <button type="submit" id="submitButton" class="btn btn-primary">
+            <i class="fas fa-edit fa-lg"></i>Add
+        </button>
+         
+        <% } %>
+
+        <a href="/survey/list" id="cancelButton" type="button" class="btn btn-warning"><i class="fas fa-undo"></i> Cancel</a>   
+    </form>
+</div>

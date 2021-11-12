@@ -1,0 +1,36 @@
+<div class="container">
+    <h1><%= title %></h1>
+    <div class="row">
+        <div class="col">
+            <a href="/survey/add" id="addButton" class="btn btn-primary mb-1"><i class="fas fa-plus-circle"></i> Add Survey</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Survey Name</th>
+                        <th scope="col">Survey Description</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let count=0; count < survey.length; count++ ) { %>
+                    <tr>
+                        <th scope="row">
+                            <%= count +1 %>
+                        </th>
+                        <td>
+                            <%= survey[count].surveyName %>
+                        </td>
+                        <td>
+                            <%= survey[count].surveyDescription %>
+                        </td>
+                        <td class="text-center"><a href="/contact/edit/<%= survey[count]._id %>" class="btn btn-primary btn-sm edit"><i class="fas fa-edit fa-sm"></i> Edit</a></td>
+                        <td class="text-center"><a href="/contact/delete/<%= survey[count]._id %>" class="btn btn-danger btn-sm delete"><i class="fas fa-trash-alt fa-sm"></i> Delete</a></td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

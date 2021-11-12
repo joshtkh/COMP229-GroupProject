@@ -1,13 +1,14 @@
 // require mongoose
 const mongoose = require("mongoose");
 
+const questionSchema = require("./question");
 const Schema = mongoose.Schema;
 
 // Create a schema for our surveys in MongoDB
 const SurveySchema = new Schema({
-    surveyID: Number,
     surveyName: String,
-    surveyDescription: String
+    surveyDescription: String,
+    surveyQuestions: [questionSchema]
 }, {
     collection: "surveys"
 });
