@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon -e ejs,js,json index.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -18,12 +18,15 @@
     "express-flash": "^0.0.2",
     "express-session": "^1.17.2",
     "http-errors": "~1.6.3",
+    "jquery": "^3.6.0",
+    "jsdom": "^18.1.0",
     "mongoose": "^6.0.12",
     "morgan": "~1.9.1",
     "passport": "^0.5.0",
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
+    "eslint": "^8.2.0",
     "nodemon": "^2.0.15"
   }
 }

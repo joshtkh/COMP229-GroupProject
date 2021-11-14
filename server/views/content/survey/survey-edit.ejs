@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container d-flex flex-column align-items-center">
     <h1>
         <%= title %>
     </h1>
-    <form method="POST" class="col-lg-6 col-md-10 col-sm-10">
+    <form method="POST" class="col-lg-12 col-md-10 col-sm-10 d-flex flex-column">
         <div class="input-group mb-3">
             <span class="input-group-text" id="surveyName">Survey Name</span>
             <input id="surveyName" type="text" class="form-control" placeholder="Survey Name"
@@ -15,21 +15,79 @@
                 aria-label="Survey Description" aria-describedby="Survey Description" name="surveyDescription"
                 value="<%= item.surveyDescription %>" required>
         </div>
+        <!-- This div will hold all of the questions the user inputs into the survey. -->
+        <div id="question1" class="border border-light rounded p-2 m-2">
+            <!-- This is the question input -->
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="surveyQuestion1">Question 1:</span>
+                <input id="surveyQuestion1" type="text" class="form-control" placeholder="Question Text..."
+                aria-label="Question 1:" aria-describedby="Question 1:" name="surveyQuestion1"
+                value="<%= item.surveyQuestion1 %>">
+            </div>
+            <!-- This part is the input for the answers to the question the user will create. Default is 2, also allows the user to add more via button click -->
+            <div id="answer1" class="input-group mb-3">
+                <span class="input-group-text" id="surveyQ1A1">Answer 1:</span>
+                <input id="surveyQ1A1" type="text" class="form-control" placeholder="Answer..."
+                aria-label="Answer 1:" aria-describedby="Answer 1:" name="surveyQ1A1"
+                value="<%= item.surveyQ1A1 %>">
+            </div>
+            <div id="answer2" class="input-group mb-3">
+                <span class="input-group-text" id="surveyQ1A2">Answer 2:</span>
+                <input id="surveyQ1A2" type="text" class="form-control" placeholder="Answer..."
+                aria-label="Answer 2:" aria-describedby="Answer 2:" name="surveyQ1A2"
+                value="<%= item.surveyQ1A2 %>">
+            </div>
+            <!-- NEW ANSWERS WILL BE ADDED HERE IN THEIR OWN GENERATED DIV -->
+            <!-- This button will add an extra answer field to the question. -->
+            <button id="addAnswer" type="button" class="btn btn-primary">Add Additional Answer</button>
+        </div>
+        <!-- NEW QUESTIONS WILL BE ADDED HERE IN THEIR OWN GENERATED DIV -->
 
-        <!-- TODO: We need a button that allows the user to add a question to this survey. There is no limit to the number of questions. -->
-
+        <!-- Button that allows the user to add a question to this survey. There is no limit to the number of questions. -->
+        <button id="addQuestion" type="button" class="btn btn-primary m-2">Add Additional Question</button>
         <!-- END TODO -->
         <% if (title.search("Edit") > -1 ) { %>
-        <button type="submit" id="submitButton" class="btn btn-primary">
-            <i class="fas fa-edit fa-lg"></i>Edit
-        </button>
+        <button type="submit" id="submitButton" class="btn btn-primary">Edit Survey</button>
         <% } else { %>
-         <button type="submit" id="submitButton" class="btn btn-primary">
-            <i class="fas fa-edit fa-lg"></i>Add
-        </button>
-         
+        <button type="submit" id="submitButton" class="btn btn-primary">Add Survey</button>
         <% } %>
 
-        <a href="/survey/list" id="cancelButton" type="button" class="btn btn-warning"><i class="fas fa-undo"></i> Cancel</a>   
+        <a href="/survey/list" id="cancelButton" type="button" class="btn btn-warning">Cancel</a>
     </form>
 </div>
+<!-- This uses JQUERY to add event listeners to our buttons -->
+<script>
+    let $addAnswerButton = $("#addAnswer");
+    console.log($addAnswerButton);
+    // onClick listener for the add answer button
+    $addAnswerButton.click(function () {
+        // When the user clicks the button, we add an extra input for an answer.
+        let $currentQuestionDiv = $addAnswerButton.parent();
+        // get the # of the current question
+        let currQuestionNum = parseInt( $currentQuestionDiv.attr("id").match(/\d+/g), 10); 
+        // get the last answer div of the current question
+        let $lastAnswer = $currentQuestionDiv.find("div[id^='answer']:last"); // id^='answer' looks for ids that start with "answer"
+        // Read the # from the id
+        let newIdNum = parseInt( $lastAnswer.attr("id").match(/\d+/g), 10) + 1; // We use regex to parse out the number in the ID field and increment it by 1.
+        // now we can clone the element and change all the ids
+        let $newAnswer = $lastAnswer.clone();
+        // set the parent id
+        $newAnswer.attr("id", "answer" + newIdNum);
+        // set all the child ids and attributes
+        $newAnswer.children().each(function () {
+            this.id = "surveyQ" + currQuestionNum + "A" + newIdNum;
+            if($(this).is("input")) {
+                $(this).attr("aria-label", "Answer " + newIdNum + ":");
+                $(this).attr("aria-label", "Answer " + newIdNum + ":");
+                $(this).attr("aria-label", "Answer " + newIdNum + ":");
+                $(this).attr("aria-label", "Answer " + newIdNum + ":");
+            }
+        });
+        // Now we can add the new element to the page.
+        $newAnswer.insertBefore($addAnswerButton);
+    });
+    // onClick listener for the add question button
+    $("#addQuestion").click(function () {
+        // When the user clicks this button, add an extra question to the survey.
+    });
+</script>

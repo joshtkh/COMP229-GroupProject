@@ -13,7 +13,7 @@ module.exports = {
                 res.end(err);
             }
             console.log("COLLECTION: " + surveyCollection);
-            res.render("content/survey/survey-list", { title: 'Survey list', page: 'survey/list', survey: surveyCollection })
+            res.render("content/survey/survey-list", { title: 'Survey list', page: 'survey/list', survey: surveyCollection})
         })
     },
     // DISPLAY THE PAGE TO EDIT A SURVEY
@@ -24,15 +24,15 @@ module.exports = {
             if (err) {
                 console.error(err);
                 res.end(err);
-            };
+            }
             console.log("SURVEY TO EDIT: " + surveyToEdit);
-            res.render("content/survey/survey-edit", { title: "Survey Edit", page: "survey/edit", item: surveyToEdit })
+            res.render("content/survey/survey-edit", { title: "Survey Edit", page: "survey/edit", item: surveyToEdit})
         })
     },
     // DISPLAY THE PAGE TO ADD A SURVEY
     DisplayAddPage(req, res, next) {
         // just show the edit view WITHOUT an item.
-        res.render("content/survey/survey-edit", { title: 'Add Survey', page: 'survey/edit', item: '' })
+        res.render("content/survey/survey-edit", { title: 'Add Survey', page: 'survey/edit', item: ''})
     },
 
     // PROCESS THE ADD PAGE
