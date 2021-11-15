@@ -7,13 +7,13 @@
             <span class="input-group-text" id="surveyName">Survey Name</span>
             <input id="surveyName" type="text" class="form-control" placeholder="Survey Name"
                 aria-label="Survey Name" aria-describedby="Survey Name" name="surveyName"
-                value="<%= item.surveyName %>" required>
+                value="<%= item.surveyName %>">
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="surveyDescription">Survey Description</span>
             <input id="surveyDescription" type="text" class="form-control" placeholder="Survey Description"
                 aria-label="Survey Description" aria-describedby="Survey Description" name="surveyDescription"
-                value="<%= item.surveyDescription %>" required>
+                value="<%= item.surveyDescription %>">
         </div>
         <!-- This div will hold all of the questions the user inputs into the survey. -->
         <div id="question1" class="question border border-light rounded p-2 m-2">
@@ -21,20 +21,20 @@
             <div class="input-group mb-3">
                 <span class="qspan input-group-text" id="surveyQuestion1">Question 1:</span>
                 <input id="surveyQuestion1" type="text" class="form-control" placeholder="Question Text..."
-                aria-label="Question 1:" aria-describedby="Question 1:" name="surveyQuestion1"
+                aria-label="Question 1:" aria-describedby="Question 1:" name="surveyQuestions[]"
                 value="<%= item.surveyQuestion1 %>">
             </div>
             <!-- This part is the input for the answers to the question the user will create. Default is 2, also allows the user to add more via button click -->
             <div id="answer1" class="answer input-group mb-3">
                 <span class="input-group-text" id="surveyQ1A1">Answer 1:</span>
                 <input id="surveyQ1A1" type="text" class="form-control" placeholder="Answer..."
-                aria-label="Answer 1:" aria-describedby="Answer 1:" name="surveyQ1A1"
+                aria-label="Answer 1:" aria-describedby="Answer 1:" name="surveyQ1Answer[]"
                 value="<%= item.surveyQ1A1 %>">
             </div>
             <div id="answer2" class="answer input-group mb-3">
                 <span class="input-group-text" id="surveyQ1A2">Answer 2:</span>
                 <input id="surveyQ1A2" type="text" class="form-control" placeholder="Answer..."
-                aria-label="Answer 2:" aria-describedby="Answer 2:" name="surveyQ1A2"
+                aria-label="Answer 2:" aria-describedby="Answer 2:" name="surveyQ1Answer[]"
                 value="<%= item.surveyQ1A2 %>">
             </div>
             <!-- NEW ANSWERS WILL BE ADDED HERE IN THEIR OWN GENERATED DIV -->
@@ -89,7 +89,7 @@
             if($(this).is("input")) {
                 $(this).attr("aria-label", "Answer " + newIdNum + ":");
                 $(this).attr("aria-describedby", "Answer " + newIdNum + ":");
-                $(this).attr("name", "surveyQ" + currQuestionNum + "A" + newIdNum);
+                $(this).attr("name", "surveyQ" + currQuestionNum + "Answer[]");
                 $(this).attr("value", "");
             }
         });
@@ -120,7 +120,7 @@
                 this.id = "surveyQ" + newQuestionNum + "A" + answerId;
             }
             if($(this).is("input")) {
-                $(this).attr("name", "surveyQ" + newQuestionNum + "A" + answerId);
+                $(this).attr("name", "surveyQ" + newQuestionNum + "Answer[]");
                 $(this).attr("value", "");
             }
         });

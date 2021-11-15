@@ -38,8 +38,9 @@ module.exports = {
     // PROCESS THE ADD PAGE
     ProcessAddPage: function(req, res, next) {
         // create a new survey and add it to the database.
-
         // TODO: Create a new Survey item using the provided details from the user.
+        // First we need to create question objects from the questions submitted by the user.
+        res.json(req.body);
     },
 
     // PROCESS THE EDIT PAGE
