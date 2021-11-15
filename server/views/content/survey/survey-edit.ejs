@@ -57,11 +57,13 @@
 </div>
 <!-- This uses JQUERY to add event listeners to our buttons -->
 <script>
+    // STORE A TEMPLATE VERSION OF THE QUESTION AS IT IS RIGHT NOW
+    let $questionTemplate = $("#question1").clone();
     let $addAnswerButton = $("#addAnswer");
-    console.log($addAnswerButton);
     // onClick listener for the add answer button
     $addAnswerButton.click(function () {
         // When the user clicks the button, we add an extra input for an answer.
+        // First get the parent of our current question
         let $currentQuestionDiv = $addAnswerButton.parent();
         // get the # of the current question
         let currQuestionNum = parseInt( $currentQuestionDiv.attr("id").match(/\d+/g), 10); 
@@ -76,18 +78,23 @@
         // set all the child ids and attributes
         $newAnswer.children().each(function () {
             this.id = "surveyQ" + currQuestionNum + "A" + newIdNum;
+            if($(this).is("span")) {
+                $(this).html("Answer " + newIdNum + ":");
+            }
             if($(this).is("input")) {
                 $(this).attr("aria-label", "Answer " + newIdNum + ":");
-                $(this).attr("aria-label", "Answer " + newIdNum + ":");
-                $(this).attr("aria-label", "Answer " + newIdNum + ":");
-                $(this).attr("aria-label", "Answer " + newIdNum + ":");
+                $(this).attr("aria-describedby", "Answer " + newIdNum + ":");
+                $(this).attr("name", "surveyQ" + currQuestionNum + "A" + newIdNum);
+                $(this).attr("value", "");
             }
         });
         // Now we can add the new element to the page.
         $newAnswer.insertBefore($addAnswerButton);
     });
     // onClick listener for the add question button
-    $("#addQuestion").click(function () {
+    let $addQuestionButton = $("#addQuestion");
+    $addQuestionButton.click(function () {
         // When the user clicks this button, add an extra question to the survey.
+        // We need to add the seciton ABOVE the addQuestionButton
     });
 </script>
