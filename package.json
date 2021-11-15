@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon -e ejs,js,json index.js"
+    "start": "node index.js",
+    "dev:start": "nodemon -e ejs,js index.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
