@@ -1,7 +1,6 @@
 // require mongoose
 const mongoose = require("mongoose");
 
-const QuestionSchema = require("./question").schema;
 const Schema = mongoose.Schema;
 
 // Create a schema for our surveys in MongoDB

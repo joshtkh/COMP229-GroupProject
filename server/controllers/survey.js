@@ -1,6 +1,7 @@
 // imports
 const express = require("express");
 const SurveyModel = require("../models/surveys");
+const QuestionModel = require("../models/question");
 
 // Read our collection and send it to the our survey list page
 module.exports = {
@@ -40,7 +41,35 @@ module.exports = {
         // create a new survey and add it to the database.
         // TODO: Create a new Survey item using the provided details from the user.
         // First we need to create question objects from the questions submitted by the user.
-        res.json(req.body);
+        let questionArray = [];
+        for (const [key, value] of Object.entries(req.body.surveyQuestions)) {
+            let newQuestion = new QuestionModel ({
+                "questionText": value,
+                "questionResponses": req.body[`surveyQ${parseInt(key)+1}Answer`]
+            });
+            QuestionModel.create(newQuestion, (err) => {
+                if(err) {
+                    console.error(err);
+                    res.end(err);
+                }
+            })
+            questionArray.push(newQuestion);
+        }
+        // Now all our questions are stored inside questionArray
+        // Now we can create a survey model 
+        let newSurvey = new SurveyModel ({
+            "surveyName": req.body.surveyName,
+            "surveyDescription": req.body.surveyDescription,
+            "surveyQuestions": questionArray
+        });
+        SurveyModel.create(newSurvey, (err) => {
+            if(err) {
+                console.error(err);
+                res.end(err);
+            }
+        });
+        res.redirect("/survey/list");
+        //res.json(req.body); //DEBUG LINE FOR CHECKING OUT req.body CONTENTS. DONT DELETE, MAY NEED FOR TESTING.
     },
 
     // PROCESS THE EDIT PAGE
