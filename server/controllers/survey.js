@@ -101,7 +101,7 @@ module.exports = {
                 console.error(err);
                 res.end(err);
             }
-            res.redirect("survey/list");
+            res.redirect("/survey/list");
         })
     }
 
