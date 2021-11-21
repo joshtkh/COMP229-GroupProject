@@ -11,5 +11,8 @@ module.exports = {
     },
     DisplaySurveyPage: function(req, res, next) {
         res.render('content/survey', { title: 'Survey', page: 'survey' });
+    },
+    DisplayLoginPage: function(req, res, next) {
+        res.render('content/login', { title: 'Login', page: 'login' });
     }
 };
