@@ -1,0 +1,46 @@
+<br>
+<div class="row">
+  <div class="offset-md-3 col-md-6 col-sm-12">
+    <div class="login" id="" >
+      <h1 class="headerText"><strong>Login</strong></h1>
+        <hr>
+      <!-- message area -->
+                <form id="loginForm" novalidate method="POST">
+            <div class="form-group">
+              <label for="username" class="form-label">Enter UserName</label>
+              <div class="input-group">               
+                <span class="input-group-addon">
+                  <i class="fas fa-user fa-2x"></i>
+                </span>
+                <input type="text" class="form-control" id="username" name="username" required value=""
+                  placeholder="Username">
+              </div>
+            </div>
+<br>
+            <div class="form-group">
+                <label for="password" class="form-label">Enter Your Password</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fas fa-lock fa-2x">
+                  </i>
+                </span>
+
+                <input type="password" class="form-control" id="password" name="password" required value=""
+                  placeholder="Password">
+              </div>
+            <br>
+            </div>
+            <div class="text-end mt-2">
+              <button id="loginButton" type="submit" class="btn btn-success"><i
+                  class="fas fa-sign-in-alt"></i>
+                Login</button> 
+                &nbsp;&nbsp;
+              <button id="cancelButton" type="reset" class="btn btn-warning"><i class="fas fa-undo"></i> Cancel</button>
+            </div>
+          </form>
+    </div>
+
+    <p class="text-center text-muted small">
+      If you don't have an account?
+      <a href="/signup" style="color: #1e8449">Sign Up here </a>
+    </p>
