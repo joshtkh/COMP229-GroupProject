@@ -7,9 +7,12 @@ const logger = require('morgan');
 const MongoStore = require('connect-mongo');
 const mongoose = require("mongoose");
 const expressLayouts = require("express-ejs-layouts");
+// AUTH imports
+const flash = require("express-flash");
+const passport = require("passport");
+const session = require("express-session");
 // Import our DB config
 const DBConfig = require("./db");
-
 // REQUIRE DOTENV TO HIDE OUR SECRETS
 require("dotenv").config();
 
@@ -35,6 +38,7 @@ const StoreOptions = {
 // ROUTER REQUIRES
 const indexRouter = require('../routes/index');
 const surveyRouter = require('../routes/survey');
+const userRouter = require('../routes/user');
 
 // DB CONFIGURATION
 mongoose.connect(connectURI);
@@ -63,8 +67,18 @@ app.use(express.static(path.join(__dirname, '../../node_modules')));
 app.use(expressLayouts);
 app.set("layout", "layouts/layout"); // POINT TO OUR DEFAULT LAYOUT FILE
 
+// AUTHENTICATION SETUP
+app.use(session(StoreOptions));
+// Init passport
+app.use(passport.initialize());
+app.use(passport.session());
+// setup FLASH NOTIFICATIONS
+app.use(flash());
+
 // INDEX SETUP
 app.use('/', indexRouter);
+// USER ROUTER SETUP
+app.use('/user', userRouter);
 // SURVEY ROUTER SETUP
 app.use('/survey', surveyRouter);
 
@@ -74,7 +88,7 @@ app.get('*', function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
