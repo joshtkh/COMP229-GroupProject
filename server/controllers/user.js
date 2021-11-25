@@ -7,7 +7,7 @@ module.exports = {
         // PROCESS LOGIN PAGE HERE
     },
     DisplayRegisterPage: async function(req, res) {
-        // If the user isn't already logged in, display the register page to them.
+        res.render('content/user/register', { title: 'Register', page: 'register' });
     },
     ProcessRegisterPage: async function(req, res) {
         // Process the register of the user here
