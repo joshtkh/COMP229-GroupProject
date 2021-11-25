@@ -1,6 +1,6 @@
 // import express & router controllers
 const express = require('express');
-const { DisplayLoginPage, ProcessLoginPage } = require("../controllers/user");
+const { DisplayLoginPage, ProcessLoginPage, DisplayRegisterPage, ProcessRegisterPage, ProcessLogout} = require("../controllers/user");
 const passport = require('passport');
 // setup router for export
 const router = express.Router();
@@ -16,7 +16,7 @@ router.post('/login', passport.authenticate('login', {
 
 
 // NOT YET IMPLIMENTED:
-//router.get('/register', DisplayRegisterPage);
+router.get('/register', DisplayRegisterPage);
 //router.post('/register', ProcessRegisterPage);
 //router.get('/logout', ProcessLogout);
 
