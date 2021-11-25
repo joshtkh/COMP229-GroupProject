@@ -5,31 +5,32 @@
             <div class="card" style="border-radius: 15px;">
               <div class="card-body p-5">
                 <h2 class="text-uppercase text-center mb-5">Create an account</h2>
-  
-                <form>
+                <!-- Error message area -->
+                <% if(messages.error) { %>
+                  <div id="messageArea" class="alert alert-danger">
+                      <%= messages.error %>
+                  </div>
+                  <% } %>
+                <!-- End of error message area -->
+                <form id="signupForm" novalidate method="POST">
   
                   <div class="form-outline mb-4">
-                    <input type="text" id="name" class="form-control form-control-lg" />
-                    <label class="form-label" for="name">Your Name</label>
+                    <input type="text" id="username" name="username" class="form-control form-control-lg" />
+                    <label class="form-label" for="username">Your Username</label>
                   </div>
   
                   <div class="form-outline mb-4">
-                    <input type="email" id="email" class="form-control form-control-lg" />
+                    <input type="email" id="email" name="email" class="form-control form-control-lg" />
                     <label class="form-label" for="email">Your Email</label>
                   </div>
   
                   <div class="form-outline mb-4">
-                    <input type="password" id="password" class="form-control form-control-lg" />
+                    <input type="password" id="password" name="password" class="form-control form-control-lg" />
                     <label class="form-label" for="password">Password</label>
                   </div>
   
-                  <div class="form-outline mb-4">
-                    <input type="password" id="password" class="form-control form-control-lg" />
-                    <label class="form-label" for="password">Repeat your password</label>
-                  </div>
-  
                   <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
+                    <button id="signupButton" type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
                   </div>
   
                   <p class="text-center text-muted mt-5 mb-0">Have an account already? <a href="/user/login" class="fw-bold text-body"><u>Login here</u></a></p>
