@@ -1,13 +1,12 @@
 // survey.js ROUTER
 // imports
 const express = require("express");
-const { DisplayListPage, DisplayAddPage, DisplayEditPage, ProcessAddPage, ProcessEditPage, ProcessDeletePage } = require("../controllers/survey");
+const { DisplayAddPage, DisplayEditPage, ProcessAddPage, ProcessEditPage, ProcessDeletePage } = require("../controllers/survey");
 
 // reference to the router
 const router = express.Router();
 
 // route apprpriate survey pages
-router.get('/list', DisplayListPage);
 router.get('/add', DisplayAddPage);
 router.get('/edit/:id', DisplayEditPage);
 
