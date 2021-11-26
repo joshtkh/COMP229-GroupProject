@@ -3,7 +3,13 @@
     <div class="login" id="" >
       <h1 class="headerText"><strong>Login</strong></h1>
         <hr>
-      <!-- message area -->
+      <!-- Error message area -->
+      <% if(messages.error) { %>
+        <div id="messageArea" class="alert alert-danger">
+            <%= messages.error %>
+        </div>
+        <% } %>
+      <!-- End of error message area -->
                 <form id="loginForm" novalidate method="POST">
             <div class="form-group">
               <label for="username" class="form-label">Enter UserName</label>

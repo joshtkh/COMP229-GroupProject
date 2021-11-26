@@ -15,26 +15,33 @@ const strategyOptions = {
 };
 
 // ASYNC LOGIN FUNCTION. Needs ASYNC because our USER MODELS need to use AWAIT when performing a search.
-const loginFunction = async (req, username, password, done) => async function() {
-    // First search for the user
-    const user = await UserModel.findOne({username});
-
-    // if the user doesn't exist, send an error
-    if (!user) {
-        return done(null, false, { message: "User does not exist." });
+const loginFunction = async (req, username, password, done) => {
+    try {
+        console.log("ENTERED LOGIN FUNCTION");
+        // First search for the user
+        const user = await UserModel.findOne({ username }).exec();
+        console.log(user);
+        // if the user doesn't exist, send an error
+        if (!user) {
+            done(null, false, { message: "User does not exist." });
+        }
+        // If the password isn't valid, send a different error.
+        if (!(await user.isValidPassword(password))) {
+            done(null, false, { message: "Password is not valid." });
+        }
+        // If we end up here, the user exists & the password is valid.
+        console.log("User authenticated successfully!");
+        done(null, user);
+    } catch (error) {
+        console.log("Auth.js: Error inside login function.", error);
+        done(error);
     }
-    // If the password isn't valid, send a different error.
-    if (!(await user.isValidPassword(password))) {
-        return done(null, false, { message: "Password is not valid." });
-    }
-    // If we end up here, the user exists & the password is valid.
-    console.log("User authenticated successfully!");
-    return done(null, user);
 };
 
 // Signup function
 const signupFunction = async (req, username, password, done) => {
     try {
+        console.log("ENTERED SIGNUP FUNCTION");
         // deconstruct data from request
         const { username, password, email } = req.body;
         console.log(req.body); // Testing line
@@ -42,7 +49,7 @@ const signupFunction = async (req, username, password, done) => {
 
         if (!username || !password || !email) {
             console.error("Auth.js: Invalid request body fields.");
-            return done(null, false);
+            done(null, false);
         }
 
         const query = {
@@ -50,7 +57,7 @@ const signupFunction = async (req, username, password, done) => {
         };
         console.log(query); // Testing line
         // Check to see if the user exists already
-        const user = await UserModel.findOne(query);
+        const user = await UserModel.findOne(query).exec();
         console.log(user);
         // If user exists, send an error
         if(user) {
@@ -68,7 +75,7 @@ const signupFunction = async (req, username, password, done) => {
             const newUser = new UserModel(userData);
             await newUser.save();
 
-            return done(null, newUser);
+            done(null, newUser);
         }
     } catch(error) {
         console.log("Error in auth.js signup function.");
@@ -95,8 +102,8 @@ const isLoggedIn = (req, res, done) => {
 passport.serializeUser((user, done) => {
     done(null, user._id);
 });
-passport.deserializeUser(async (userId, done) => {
-    await UserModel.findById(userId, function (err, user) {
+passport.deserializeUser((userId, done) => {
+    UserModel.findById(userId, function (err, user) {
         done(err, user);
     });
 });

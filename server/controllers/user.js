@@ -29,7 +29,6 @@ module.exports = {
             console.log(err, user, info); // TESTING LINE
             console.log("Inside passport.authenticate");
             if (err) {
-                console.log("Error found", err);
                 return next(err);
             }
             // If the user exists, show error message with flash (happens through passport in routes/user.js)
@@ -41,7 +40,6 @@ module.exports = {
             console.log("Redirect should happen now.");
             return res.redirect('/user/login');
         })(req, res, next);
-        console.log("????");
     },
     // Log the user out by destorying the session and redirecting them back to the login page.
     ProcessLogout: async function(req, res) {
