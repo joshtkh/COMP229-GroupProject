@@ -14,7 +14,7 @@ module.exports = {
                 res.end(err);
             }
             console.log("SURVEY TO TAKE: " + surveyToTake);
-            res.render("content/survey/survey-take", { title: `${surveyToTake.surveyName}`, page: "take", item: surveyToTake })
+            res.render("content/survey/take-survey", { title: `${surveyToTake.surveyName}`, page: "take", item: surveyToTake })
         })
     },
     // Process the results of the survey through this function
@@ -24,5 +24,10 @@ module.exports = {
         // TODO: Create a new response model that holds the value
         // of the response for each question, and a reference to
         // that question. (see models/response.js for model ref)
+
+        // first we need to loop through each question and grab the response
+        for (const [key, value] of Object.entries(req.body.surveyQuestions)) {
+            
+        }
     }
 }
