@@ -13,7 +13,7 @@ router.get('/edit/:id', DisplayEditPage);
 
 // PROCESS the survey pages.
 router.post('/add', ProcessAddPage);
-router.post('/edit:id', ProcessEditPage);
+router.post('/edit/:id', ProcessEditPage);
 
 // DELETE with this route.
 router.get("/delete/:id", ProcessDeletePage);

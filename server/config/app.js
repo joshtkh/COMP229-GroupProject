@@ -11,6 +11,7 @@ const expressLayouts = require("express-ejs-layouts");
 const flash = require("express-flash");
 const passport = require("passport");
 const session = require("express-session");
+const { isLoggedIn } = require("../middleware/auth");
 // Import our DB config
 const DBConfig = require("./db");
 // REQUIRE DOTENV TO HIDE OUR SECRETS
@@ -39,6 +40,7 @@ const StoreOptions = {
 const indexRouter = require('../routes/index');
 const surveyRouter = require('../routes/survey');
 const userRouter = require('../routes/user');
+const takeSurveyRouter = require('../routes/take-survey');
 
 // DB CONFIGURATION
 mongoose.connect(connectURI);
@@ -79,8 +81,10 @@ app.use(flash());
 app.use('/', indexRouter);
 // USER ROUTER SETUP
 app.use('/user', userRouter);
-// SURVEY ROUTER SETUP
-app.use('/survey', surveyRouter);
+// SURVEY ROUTER SETUP, blocked by authentication (ie, requires user to be logged in)
+app.use('/survey', isLoggedIn, surveyRouter);
+// PUBLIC route that allows surveys to be filled out and submitted.
+app.use('/take', takeSurveyRouter);
 
 // Catch any other route here and give a 404 error
 app.get('*', function(req, res, next) {
@@ -98,6 +102,5 @@ app.use(function(err, req, res) {
   res.render('error', { title: 'Error', message: err.message });
 });
 
-console.log("????????????????????????????????????????????");
 // Now export the app
 module.exports = app;
