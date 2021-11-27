@@ -103,6 +103,10 @@ module.exports = {
 
     // PROCESS THE PAGE TO DELETE A SURVEY
     ProcessDeletePage: function(req, res) {
+        // ONLY ALLOW DELETES IF THE USER IS LOGGED IN
+        if (!req.user) {
+            return res.redirect("/user/register");
+        }
         let id = req.params.id;
         SurveyModel.findByIdAndDelete(id, (err) => {
             if (err) {
