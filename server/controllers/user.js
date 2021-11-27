@@ -38,7 +38,7 @@ module.exports = {
             }
             // If successful, redirect to the login page
             console.log("Redirect should happen now.");
-            return res.redirect('/user/login');
+            res.redirect('/user/login');
         })(req, res, next);
     },
     // Log the user out by destorying the session and redirecting them back to the login page.
