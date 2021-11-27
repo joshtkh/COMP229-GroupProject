@@ -8,8 +8,5 @@ module.exports = {
     }, 
     DisplayContactPage: function(req, res) {
         res.render('content/contact', { title: 'Contact', page: 'contact', user: req.user });
-    },
-    DisplaySurveyPage: function(req, res) {
-        res.render('content/survey', { title: 'Survey', page: 'survey', user: req.user });
     }
 };
