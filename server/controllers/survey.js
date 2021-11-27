@@ -14,13 +14,13 @@ module.exports = {
                 res.end(err);
             }
             console.log("SURVEY TO EDIT: " + surveyToEdit);
-            res.render("content/survey/survey-edit", { title: "Survey Edit", page: "survey/edit", item: surveyToEdit, user: req.user })
+            res.render("content/survey/survey-edit", { title: "Survey Edit", page: "survey/edit", item: surveyToEdit, user: req.user });
         });
     },
     // DISPLAY THE PAGE TO ADD A SURVEY
     DisplayAddPage(req, res) {
         // just show the edit view WITHOUT an item.
-        res.render("content/survey/survey-edit", { title: 'Add Survey', page: 'survey/edit', item: '', user: req.user })
+        res.render("content/survey/survey-edit", { title: 'Add Survey', page: 'survey/edit', item: '', user: req.user });
     },
 
     // PROCESS THE ADD PAGE
@@ -36,7 +36,7 @@ module.exports = {
             QuestionModel.create(newQuestion, (err) => {
                 if(err) {
                     console.error(err);
-                    res.end(err);
+                    return res.end(err);
                 }
             });
             questionArray.push(newQuestion);
@@ -51,10 +51,10 @@ module.exports = {
         SurveyModel.create(newSurvey, (err) => {
             if(err) {
                 console.error(err);
-                res.end(err);
+                return res.end(err);
             }
         });
-        res.redirect("/take/list");
+        return res.redirect("/take/list");
         //res.json(req.body); //DEBUG LINE FOR CHECKING OUT req.body CONTENTS. DONT DELETE, MAY NEED FOR TESTING.
     },
 
@@ -75,7 +75,7 @@ module.exports = {
             QuestionModel.create(newQuestion, (err) => {
                 if(err) {
                     console.error(err);
-                    res.end(err);
+                    return res.end(err);
                 }
             })
             questionArray.push(newQuestion);
@@ -94,10 +94,10 @@ module.exports = {
         SurveyModel.updateOne({ _id: id }, updatedItem, {}, (err) => {
             if (err) {
                 console.error(err);
-                res.end(err);
+                return res.end(err);
             }
             // After it is added, redirect the user back to the list page.
-            res.redirect("/take/list");
+            return res.redirect("/take/list");
         })
     },
 
@@ -113,8 +113,7 @@ module.exports = {
                 console.error(err);
                 res.end(err);
             }
-            res.redirect("/take/list");
+            return res.redirect("/take/list");
         });
     }
-
 }
