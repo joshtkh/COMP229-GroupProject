@@ -14,7 +14,7 @@ module.exports = {
                 res.end(err);
             }
             console.log("COLLECTION: " + surveyCollection);
-            res.render("content/survey/survey-list", { title: 'Survey list', page: 'take/list', survey: surveyCollection})
+            res.render("content/survey/survey-list", { title: 'Survey list', page: 'take/list', survey: surveyCollection, user: req.user})
         })
     },
     // Display the page where anyone can take a survey
@@ -27,7 +27,7 @@ module.exports = {
                 res.end(err);
             }
             console.log("SURVEY TO TAKE: " + surveyToTake);
-            res.render("content/survey/take-survey", { title: `${surveyToTake.surveyName}`, page: "take", item: surveyToTake })
+            res.render("content/survey/take-survey", { title: `${surveyToTake.surveyName}`, page: "take", item: surveyToTake, user: req.user })
         });
     },
     // Process the results of the survey through this function

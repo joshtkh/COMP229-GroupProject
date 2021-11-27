@@ -4,18 +4,6 @@ const QuestionModel = require("../models/question");
 
 // Read our collection and send it to the our survey list page
 module.exports = {
-    // DISPLAY THE LIST OF SURVEYS
-    DisplayListPage: function(req, res) {
-        // Logic for displaying the list page goes here
-        SurveyModel.find(function (err, surveyCollection) {
-            if (err) {
-                console.error(err);
-                res.end(err);
-            }
-            console.log("COLLECTION: " + surveyCollection);
-            res.render("content/survey/survey-list", { title: 'Survey list', page: 'survey/list', survey: surveyCollection})
-        })
-    },
     // DISPLAY THE PAGE TO EDIT A SURVEY
     DisplayEditPage: function(req, res) {
         // logic for displaying our page to edit surveys
@@ -26,13 +14,13 @@ module.exports = {
                 res.end(err);
             }
             console.log("SURVEY TO EDIT: " + surveyToEdit);
-            res.render("content/survey/survey-edit", { title: "Survey Edit", page: "survey/edit", item: surveyToEdit})
-        })
+            res.render("content/survey/survey-edit", { title: "Survey Edit", page: "survey/edit", item: surveyToEdit, user: req.user })
+        });
     },
     // DISPLAY THE PAGE TO ADD A SURVEY
     DisplayAddPage(req, res) {
         // just show the edit view WITHOUT an item.
-        res.render("content/survey/survey-edit", { title: 'Add Survey', page: 'survey/edit', item: ''})
+        res.render("content/survey/survey-edit", { title: 'Add Survey', page: 'survey/edit', item: '', user: req.user })
     },
 
     // PROCESS THE ADD PAGE
@@ -50,7 +38,7 @@ module.exports = {
                     console.error(err);
                     res.end(err);
                 }
-            })
+            });
             questionArray.push(newQuestion);
         }
         // Now all our questions are stored inside questionArray
@@ -66,7 +54,7 @@ module.exports = {
                 res.end(err);
             }
         });
-        res.redirect("/survey/list");
+        res.redirect("/take/list");
         //res.json(req.body); //DEBUG LINE FOR CHECKING OUT req.body CONTENTS. DONT DELETE, MAY NEED FOR TESTING.
     },
 
@@ -109,20 +97,20 @@ module.exports = {
                 res.end(err);
             }
             // After it is added, redirect the user back to the list page.
-            res.redirect("/survey/list");
+            res.redirect("/take/list");
         })
     },
 
     // PROCESS THE PAGE TO DELETE A SURVEY
     ProcessDeletePage: function(req, res) {
         let id = req.params.id;
-        SurveyModel.remove({_id: id}, (err) => {
+        SurveyModel.findByIdAndDelete(id, (err) => {
             if (err) {
                 console.error(err);
                 res.end(err);
             }
-            res.redirect("/survey/list");
-        })
+            res.redirect("/take/list");
+        });
     }
 
 }

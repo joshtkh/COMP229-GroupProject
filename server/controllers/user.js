@@ -5,22 +5,22 @@ const passport = require('passport');
 module.exports = {
     DisplayLoginPage: async function(req, res) {
         if (!req.user) {
-            return res.render('content/user/login', { title: 'Login', page: 'login' });
+            return res.render('content/user/login', { title: 'Login', page: 'login', user: req.user });
         }
         // If they are already logged in, redirect to the survey list page
-        return res.redirect('/survey/list');
+        return res.redirect('/take/list');
     },
     ProcessLoginPage: async function(req, res) {
         // PROCESS LOGIN PAGE HERE
         // After a user logs in, redirect them to the list page
-        return res.redirect('/survey/list');
+        return res.redirect('/take/list');
     },
     DisplayRegisterPage: async function(req, res) {
         if (!req.user) {
-            return res.render('content/user/register', { title: 'Register', page: 'register' });
+            return res.render('content/user/register', { title: 'Register', page: 'register', user: req.user });
         }
         // If the user is logged in already, redirect them to the list page
-        return res.redirect('/survey/list');
+        return res.redirect('/take/list');
     },
     ProcessRegisterPage: async function(req, res, next) {
         console.log("Process Register Started");
@@ -34,7 +34,7 @@ module.exports = {
             // If the user exists, show error message with flash (happens through passport in routes/user.js)
             if (!user) {
                 console.log("User Already Exists");
-                return res.render('content/user/register', { title: 'Register', page: 'register' });
+                return res.render('content/user/register', { title: 'Register', page: 'register', user: req.user });
             }
             // If successful, redirect to the login page
             console.log("Redirect should happen now.");

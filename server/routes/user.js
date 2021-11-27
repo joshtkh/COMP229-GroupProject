@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/login',  DisplayLoginPage);
 // process the login page with the help of passport
 router.post('/login', passport.authenticate('login', {
-    successRedirect: '/survey/list',
+    successRedirect: '/take/list',
     failureRedirect: '/user/login',
     failureFlash: true
 }), ProcessLoginPage);
