@@ -92,7 +92,7 @@ passport.use('signup', new LocalStrategy(strategyOptions, signupFunction));
 const isLoggedIn = (req, res, done) => {
     if(!req.user) {
         // If the user isn't logged in, redirect to the log in page.
-        res.redirect('/user/login');
+        return res.redirect('/user/login');
     }
     // Otherwise, user is logged in
     return done(null, req.user);
