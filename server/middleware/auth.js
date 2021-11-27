@@ -95,16 +95,16 @@ const isLoggedIn = (req, res, done) => {
         res.redirect('/user/login');
     }
     // Otherwise, user is logged in
-    done(null, req.user);
+    return done(null, req.user);
 }
 
 // Serialize/Deserialize users with passport
 passport.serializeUser((user, done) => {
-    done(null, user._id);
+    return done(null, user._id);
 });
 passport.deserializeUser((userId, done) => {
     UserModel.findById(userId, function (err, user) {
-        done(err, user);
+        return done(err, user);
     });
 });
 
