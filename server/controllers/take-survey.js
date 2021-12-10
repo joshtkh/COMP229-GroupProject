@@ -1,5 +1,6 @@
 // imports
 const SurveyModel = require("../models/surveys");
+const QuestionModel = require("../models/question");
 const ResponseModel = require("../models/response");
 
 // Export routes
@@ -17,17 +18,31 @@ module.exports = {
         })
     },
     // Display the page where anyone can take a survey
-    DisplayTakeSurveyPage: function(req, res) {
+    DisplayTakeSurveyPage: async function(req, res) {
         // logic for displaying our page to edit surveys
         let id = req.params.id;
-        SurveyModel.findById(id, {}, {}, (err, surveyToTake) => {
-            if (err) {
-                console.error(err);
-                res.end(err);
+        try {
+            const surveyToTake = await SurveyModel.findById(id);
+            // Now we need to add the survey questions into a list we can pass to the page
+            const questionArray = [];
+            for (let i = 0; i < surveyToTake.surveyQuestions.length; i++) {
+                try {
+                    const currentQuestion = await QuestionModel.findById(surveyToTake.surveyQuestions[i]._id);
+                    questionArray.push(currentQuestion);
+                } catch (err) {
+                    console.error(err);
+                    console.log("Error with QuestionModel.findById inside DisplayTakeSurveyPage.");
+                    return res.end(err);
+                }
             }
+            // Now we can render the page and send it the variables it needs
             console.log("SURVEY TO TAKE: " + surveyToTake);
-            return res.render("content/survey/take-survey", { title: `${surveyToTake.surveyName}`, page: "take", item: surveyToTake, user: req.user })
-        });
+            return res.render("content/survey/take-survey", { title: `${surveyToTake.surveyName}`, page: "take", item: surveyToTake, questions: questionArray, user: req.user });
+        } catch (err) {
+            console.log("Error in DisplayTakeSurvey page.");
+            console.error(err);
+            return res.end(err);
+        }
     },
     // Process the results of the survey through this function
     ProcessTakeSurveyPage: async function(req, res) {
@@ -38,12 +53,14 @@ module.exports = {
             const currentSurvey = await SurveyModel.findById(id);
             // DONE: Create a new response model that holds the value
             // of the response for each question, and a reference to
-            // that question. (see models/response.js for model ref)
+            // that question & survey. (see models/response.js for model ref)
             // we need to loop through each response 
-            for (const [, value] of Object.entries(req.body.surveyResponses)) {
+            for (const [key, value] of Object.entries(req.body.surveyResponses)) {
+                console.log("key/value: ", key, value);
                 // create a response object from the request data
                 let newResponse = new ResponseModel({
-                    "questionReference": currentSurvey._id,
+                    "surveyReference": currentSurvey._id,
+                    "questionReference": key+1,
                     "questionResponse": value
                 });
                 // Now create the model using this data
