@@ -29,7 +29,12 @@
             <span id="surveyDescription">Description: <%= item.surveyDescription %></span>
         </div>
         <!-- The amount of questions will vary based on each survey, so this needs to be dynamic -->
-        
+        <% for(let questionNumber = 0; questionNumber < item.surveyQuestions.length; questionNumber++) { %>
+        <!-- Div that holds each QUESTION -->
+        <div class="qdiv mb-3">
+
+        </div>
+        <% } %>
     </form>
 </div>
 </div>
