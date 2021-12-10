@@ -11,11 +11,12 @@ module.exports = {
         // Logic for displaying the list page goes here
         SurveyModel.find(function (err, surveyCollection) {
             if (err) {
+                console.log("Error in SurveyModel.find inside DisplayListPage");
                 console.error(err);
                 return res.end(err);
             }
             return res.render("content/survey/survey-list", { title: 'Survey list', page: 'take/list', survey: surveyCollection, user: req.user})
-        })
+        });
     },
     // Display the page where anyone can take a survey
     DisplayTakeSurveyPage: async function(req, res) {
@@ -66,9 +67,10 @@ module.exports = {
             // DONE: Create a new response model that holds the value
             // of the response for each question, and a reference to
             // that question & survey. (see models/response.js for model ref)
-            // we need to loop through each response 
+            // we need to loop through each response and assign appropriate values to it
             for (const [key, value] of Object.entries(req.body.surveyResponses)) {
                 console.log("key/value: ", key, value);
+                console.log("in the array: ", questionArray[key]);
                 // create a response object from the request data
                 let newResponse = new ResponseModel({
                     "surveyReference": currentSurvey._id,

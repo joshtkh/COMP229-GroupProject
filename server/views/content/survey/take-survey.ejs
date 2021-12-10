@@ -1,4 +1,4 @@
-<div class="container mb-5 container-fluid text-center  border border-dark">
+<div class="container mb-5 container-fluid text-center border border-dark">
 <!-- TODO: Create a page that allows a survey to be filled out. -->
 <!-- Important notes: This page will be passed the survey object that
         needs to be taken, which means you have access to the survey
@@ -7,7 +7,7 @@
         see what you have access to. This is how you will display the
         text from the questions in the survey.
 
-        Tips to start: item.surveyQuestions is an array.
+        Tips to start: questions is an array.
         it stores each question as its own question object, 
         you can refernece this in the question model. 
         Each question stores its list of responses as strings.
@@ -23,5 +23,13 @@
     <!-- NAMING NOTES: all radio button inputs REQUIRE a 'name' property,
             and they ALL must be set to 'surveyResponses[]' -->
     <!-- EX: <input type="radio" name="surveyResponses[]" .....> -->
+    <form id="takeSurvey" method="POST" class="col-lg-12 col-md-10 col-sm-10 d-flex flex-column">
+        <div class="mb-3">
+            <span id="surveyName">Survey Name: <%= item.surveyName %></span>
+            <span id="surveyDescription">Description: <%= item.surveyDescription %></span>
+        </div>
+        <!-- The amount of questions will vary based on each survey, so this needs to be dynamic -->
+        
+    </form>
 </div>
 </div>
