@@ -19,21 +19,21 @@
         <!-- This div will hold all of the questions the user inputs into the survey. -->
         <!-- The size changes based on the number of questions in the survey being edited -->
         <% for(let questionNumber = 0; questionNumber < item.surveyQuestions.length; questionNumber++) { %>
-        <div id="question<% questionNumber + 1 %>" class="question border border-light rounded p-2 m-2">
+        <div id="question<%= questionNumber + 1 %>" class="question border border-light rounded p-2 m-2">
             <!-- This is the question input -->
             <div class="input-group mb-3">
-                <span class="qspan input-group-text" id="surveyQuestion<% questionNumber + 1 %>">Question <% questionNumber + 1 %>:</span>
-                <input id="surveyQuestion<% questionNumber + 1 %>" type="text" class="form-control" placeholder="Question Text..."
-                aria-label="Question <% questionNumber + 1 %>:" aria-describedby="Question <% questionNumber + 1 %>:" name="surveyQuestions[]"
+                <span class="qspan input-group-text" id="surveyQuestion<%= questionNumber + 1 %>">Question <%= questionNumber + 1 %>:</span>
+                <input id="surveyQuestion<%= questionNumber + 1 %>" type="text" class="form-control" placeholder="Question Text..."
+                aria-label="Question <%= questionNumber + 1 %>:" aria-describedby="Question <%= questionNumber + 1 %>:" name="surveyQuestions[]"
                 value="<%= questions[questionNumber].questionText %>">
             </div>
             <!-- This part is the input for the answers to the question the user will create. Default is 2, also allows the user to add more via button click -->
             <!-- We need to dynamically add more boxes if needed based on the question length -->
             <% for(let responseNumber = 0; responseNumber < questions[questionNumber].questionResponses.length; responseNumber++) { %>
-            <div id="answer<% responseNumber + 1 %>" class="answer input-group mb-3">
-                <span class="input-group-text" id="surveyQ<% questionNumber + 1 %>A<% responseNumber + 1 %>">Answer <% responseNumber + 1 %>:</span>
-                <input id="surveyQ<% questionNumber + 1 %>A<% responseNumber + 1 %>" type="text" class="form-control" placeholder="Answer..."
-                aria-label="Answer <% responseNumber + 1 %>:" aria-describedby="Answer <% responseNumber + 1 %>:" name="surveyQ<% questionNumber + 1 %>Answer[]"
+            <div id="answer<%= responseNumber + 1 %>" class="answer input-group mb-3">
+                <span class="input-group-text" id="surveyQ<%= questionNumber + 1 %>A<%= responseNumber + 1 %>">Answer <%= responseNumber + 1 %>:</span>
+                <input id="surveyQ<%= questionNumber + 1 %>A<%= responseNumber + 1 %>" type="text" class="form-control" placeholder="Answer..."
+                aria-label="Answer <%= responseNumber + 1 %>:" aria-describedby="Answer <%= responseNumber + 1 %>:" name="surveyQ<%= questionNumber + 1 %>Answer[]"
                 value="<%= questions[questionNumber].questionResponses[responseNumber] %>">
             </div>
             <% } %>
