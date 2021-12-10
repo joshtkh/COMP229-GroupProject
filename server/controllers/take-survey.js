@@ -48,9 +48,21 @@ module.exports = {
     ProcessTakeSurveyPage: async function(req, res) {
         // grab the id first so we can find the survey being taken
         let id = req.params.id;
-        // Now search for the current survey model being used.
         try {
+            // Now search for the current survey model being used.
             const currentSurvey = await SurveyModel.findById(id);
+            // Also need a reference to all the questions in the survey
+            const questionArray = [];
+            for (let i = 0; i < currentSurvey.surveyQuestions.length; i++) {
+                try {
+                    const currentQuestionId = await QuestionModel.findById(currentSurvey.surveyQuestions[i]._id);
+                    questionArray.push(currentQuestionId);
+                } catch (err) {
+                    console.log("Error with QuestionModel.findById in ProcessTakeSurveyPage.");
+                    console.error(err);
+                    return res.end(err);
+                }
+            }
             // DONE: Create a new response model that holds the value
             // of the response for each question, and a reference to
             // that question & survey. (see models/response.js for model ref)
@@ -60,7 +72,7 @@ module.exports = {
                 // create a response object from the request data
                 let newResponse = new ResponseModel({
                     "surveyReference": currentSurvey._id,
-                    "questionReference": key+1,
+                    "questionReference": questionArray[key],
                     "questionResponse": value
                 });
                 // Now create the model using this data
