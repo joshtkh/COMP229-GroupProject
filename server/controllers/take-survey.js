@@ -40,7 +40,7 @@ module.exports = {
             // of the response for each question, and a reference to
             // that question. (see models/response.js for model ref)
             // we need to loop through each response 
-            for (const [key, value] of Object.entries(req.body.surveyResponses)) {
+            for (const [, value] of Object.entries(req.body.surveyResponses)) {
                 // create a response object from the request data
                 let newResponse = new ResponseModel({
                     "questionReference": currentSurvey._id,
