@@ -17,31 +17,32 @@
                 value="<%= item.surveyDescription %>">
         </div>
         <!-- This div will hold all of the questions the user inputs into the survey. -->
-        <div id="question1" class="question border border-light rounded p-2 m-2">
+        <!-- The size changes based on the number of questions in the survey being edited -->
+        <% for(let questionNumber = 0; questionNumber < item.surveyQuestions.length; questionNumber++) { %>
+        <div id="question<% questionNumber + 1 %>" class="question border border-light rounded p-2 m-2">
             <!-- This is the question input -->
             <div class="input-group mb-3">
-                <span class="qspan input-group-text" id="surveyQuestion1">Question 1:</span>
-                <input id="surveyQuestion1" type="text" class="form-control" placeholder="Question Text..."
-                aria-label="Question 1:" aria-describedby="Question 1:" name="surveyQuestions[]"
-                value="<%= item.surveyQuestion1 %>">
+                <span class="qspan input-group-text" id="surveyQuestion<% questionNumber + 1 %>">Question <% questionNumber + 1 %>:</span>
+                <input id="surveyQuestion<% questionNumber + 1 %>" type="text" class="form-control" placeholder="Question Text..."
+                aria-label="Question <% questionNumber + 1 %>:" aria-describedby="Question <% questionNumber + 1 %>:" name="surveyQuestions[]"
+                value="<%= questions[questionNumber].questionText %>">
             </div>
             <!-- This part is the input for the answers to the question the user will create. Default is 2, also allows the user to add more via button click -->
-            <div id="answer1" class="answer input-group mb-3">
-                <span class="input-group-text" id="surveyQ1A1">Answer 1:</span>
-                <input id="surveyQ1A1" type="text" class="form-control" placeholder="Answer..."
-                aria-label="Answer 1:" aria-describedby="Answer 1:" name="surveyQ1Answer[]"
-                value="<%= item.surveyQ1A1 %>">
+            <!-- We need to dynamically add more boxes if needed based on the question length -->
+            <% for(let responseNumber = 0; responseNumber < questions[questionNumber].questionResponses.length; responseNumber++) { %>
+            <div id="answer<% responseNumber + 1 %>" class="answer input-group mb-3">
+                <span class="input-group-text" id="surveyQ<% questionNumber + 1 %>A<% responseNumber + 1 %>">Answer <% responseNumber + 1 %>:</span>
+                <input id="surveyQ<% questionNumber + 1 %>A<% responseNumber + 1 %>" type="text" class="form-control" placeholder="Answer..."
+                aria-label="Answer <% responseNumber + 1 %>:" aria-describedby="Answer <% responseNumber + 1 %>:" name="surveyQ<% questionNumber + 1 %>Answer[]"
+                value="<%= questions[questionNumber].questionResponses[responseNumber] %>">
             </div>
-            <div id="answer2" class="answer input-group mb-3">
-                <span class="input-group-text" id="surveyQ1A2">Answer 2:</span>
-                <input id="surveyQ1A2" type="text" class="form-control" placeholder="Answer..."
-                aria-label="Answer 2:" aria-describedby="Answer 2:" name="surveyQ1Answer[]"
-                value="<%= item.surveyQ1A2 %>">
-            </div>
+            <% } %>
             <!-- NEW ANSWERS WILL BE ADDED HERE IN THEIR OWN GENERATED DIV -->
+
             <!-- This button will add an extra answer field to the question. -->
             <button type="button" class="answer addAnswer btn btn-primary">Add Additional Answer</button>
         </div>
+        <% } %>
         <!-- NEW QUESTIONS WILL BE ADDED HERE IN THEIR OWN GENERATED DIV -->
 
         <!-- Button that allows the user to add a question to this survey. There is no limit to the number of questions. -->

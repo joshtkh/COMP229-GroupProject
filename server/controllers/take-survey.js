@@ -11,10 +11,9 @@ module.exports = {
         SurveyModel.find(function (err, surveyCollection) {
             if (err) {
                 console.error(err);
-                res.end(err);
+                return res.end(err);
             }
-            console.log("COLLECTION: " + surveyCollection);
-            res.render("content/survey/survey-list", { title: 'Survey list', page: 'take/list', survey: surveyCollection, user: req.user})
+            return res.render("content/survey/survey-list", { title: 'Survey list', page: 'take/list', survey: surveyCollection, user: req.user})
         })
     },
     // Display the page where anyone can take a survey
@@ -27,7 +26,7 @@ module.exports = {
                 res.end(err);
             }
             console.log("SURVEY TO TAKE: " + surveyToTake);
-            res.render("content/survey/take-survey", { title: `${surveyToTake.surveyName}`, page: "take", item: surveyToTake, user: req.user })
+            return res.render("content/survey/take-survey", { title: `${surveyToTake.surveyName}`, page: "take", item: surveyToTake, user: req.user })
         });
     },
     // Process the results of the survey through this function
@@ -52,16 +51,16 @@ module.exports = {
                     if(err) {
                         console.log("Error creating ResponseModel");
                         console.error(err);
-                        res.end(err);
+                        return res.end(err);
                     }
                 });
                 // Now the response model has been created from the users responses, we redirect back to the home page.
-                res.redirect("/");
+                return res.redirect("/");
             }
         } catch(error) {
             console.log("Error caught in ProcessTakeSurveyPage function!");
             console.log(error);
-            res.end(error);
+            return res.end(error);
         }  
     }
 }
