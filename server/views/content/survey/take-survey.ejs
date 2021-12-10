@@ -1,4 +1,4 @@
-<div class="container mb-5 container-fluid text-center border border-dark">
+<div class="container mb-5 p-3 container-fluid text-center border border-dark">
 <!-- TODO: Create a page that allows a survey to be filled out. -->
 <!-- Important notes: This page will be passed the survey object that
         needs to be taken, which means you have access to the survey
@@ -15,29 +15,27 @@
         and a radio button for each of the responses in the question.
             -- Josh H -->
 
-<div class="container">
-    <h1><%= title %></h1>
     <!-- Start with a form, and create a section for each question. -->
     <!-- Inside each question, list the responses as radio buttons. -->
     <!-- At the end of the form, have a submit button. -->
     <!-- NAMING NOTES: all radio button inputs REQUIRE a 'name' property,
-            and they ALL must be set to 'surveyResponses[]' -->
-    <!-- EX: <input type="radio" name="surveyResponses[]" .....> -->
+            and they ALL must be set to 'q#Response' -->
+    <!-- EX: <input type="radio" name="q1Response" .....> -->
     <form id="takeSurvey" method="POST" class="col-lg-12 col-md-10 col-sm-10 d-flex flex-column">
         <div class="mb-3">
             <h2 id="surveyName">Survey Name: <%= item.surveyName %></h2>
-            <h2 id="surveyDescription">Description: <%= item.surveyDescription %></h2>
+            <h4 id="surveyDescription">Description: <%= item.surveyDescription %></h4>
         </div>
         <!-- The amount of questions will vary based on each survey, so this needs to be dynamic -->
         <% for(let questionNumber = 0; questionNumber < item.surveyQuestions.length; questionNumber++) { %>
         <!-- Div that holds each QUESTION -->
-        <div class="qdiv mb-3">
-            <h3 class="questionText">Question: <%= questions[questionNumber].questionText %></h3>
+        <div class="qdiv mb-3 p-2 border">
+            <span class="mx-2 questionText"><strong>Question <%= questionNumber+1 %>:</strong> <%= questions[questionNumber].questionText %></span>
             <div class="btn-group" role="group">
                 <!-- The amount of responses varies, so this needs to be dynamic as well -->
                 <% for(let responseNumber = 0; responseNumber < questions[questionNumber].questionResponses.length; responseNumber++) { %>
-                    <input id=`q${questionNumber+1}a${responseNumber+1}` type="radio" class="btn-check" name="surveyResponses[]">
-                    <label for=`q${questionNumber+1}a${responseNumber+1}` class="btn btn-outline-primary"><%= questions[questionNumber].questionResponses[responseNumber] %></label>
+                <input id="q<%= questionNumber+1 %>a<%= responseNumber+1 %>" type="radio" class="btn-check" value="<%= questions[questionNumber].questionResponses[responseNumber] %>" name="q<%= questionNumber+1 %>Response">
+                <label for="q<%= questionNumber+1 %>a<%= responseNumber+1 %>" class="btn btn-outline-primary"><%= questions[questionNumber].questionResponses[responseNumber] %></label>
                 <% } %>
             </div>
         </div>
@@ -45,5 +43,4 @@
         <!-- Section for submission button -->
         <button type="submit" id="submitButton" class="btn btn-primary">Submit Survey</button>
     </form>
-</div>
 </div>

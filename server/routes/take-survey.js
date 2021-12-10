@@ -7,8 +7,8 @@ const router = express.Router();
 // Survey list route
 router.get('/list', DisplayListPage);
 // route appropriate pages for taking a survey
-router.get("/take/:id", DisplayTakeSurveyPage);
-router.post("/take/:id", ProcessTakeSurveyPage);
+router.get("/:id", DisplayTakeSurveyPage);
+router.post("/:id", ProcessTakeSurveyPage);
 
 // EXPORT
 module.exports = router;

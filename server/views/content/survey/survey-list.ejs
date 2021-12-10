@@ -11,6 +11,7 @@
                         <th scope="col">Survey Name</th>
                         <th scope="col">Survey Description</th>
                         <th scope="col">Survey Link</th>
+                        <th># of Responses</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -29,6 +30,9 @@
                         </td>
                         <td>
                             <a href="/take/<%= survey[count]._id %>">Take This Survey!</a>
+                        </td>
+                        <td>
+                            <%= survey[count].surveyTakenCount %>
                         </td>
                         <!-- TODO: We need these buttons to appear only if the user is logged in! -->
                         <td class="text-center"><a href="/survey/edit/<%= survey[count]._id %>" class="btn btn-primary btn-sm edit">Edit</a></td>

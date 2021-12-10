@@ -49,6 +49,7 @@ module.exports = {
     ProcessTakeSurveyPage: async function(req, res) {
         // grab the id first so we can find the survey being taken
         let id = req.params.id;
+        //res.json(req.body); // This is a testing line to show what is contained inside the request body
         try {
             // Now search for the current survey model being used.
             const currentSurvey = await SurveyModel.findById(id);
@@ -68,13 +69,14 @@ module.exports = {
             // of the response for each question, and a reference to
             // that question & survey. (see models/response.js for model ref)
             // we need to loop through each response and assign appropriate values to it
-            for (const [key, value] of Object.entries(req.body.surveyResponses)) {
-                console.log("key/value: ", key, value);
-                console.log("in the array: ", questionArray[key]);
+            // keep a track of which question index # we are on
+            let count = 0;
+            for (const [, value] of Object.entries(req.body)) {
+                console.log("sid/qid: ", currentSurvey._id, questionArray[count]._id);
                 // create a response object from the request data
                 let newResponse = new ResponseModel({
                     "surveyReference": currentSurvey._id,
-                    "questionReference": questionArray[key],
+                    "questionReference": questionArray[count]._id,
                     "questionResponse": value
                 });
                 // Now create the model using this data
@@ -85,9 +87,15 @@ module.exports = {
                         return res.end(err);
                     }
                 });
-                // Now the response model has been created from the users responses, we redirect back to the home page.
-                return res.redirect("/");
+                count++;
             }
+            // First we update how many times the survey has been taken and save it
+            currentSurvey.surveyTakenCount += 1;
+            await currentSurvey.save();
+            console.log(currentSurvey.surveyTakenCount);
+            // Now the response model has been created from the users responses, we redirect back to the list page.
+            // TODO: Create a page to let the user know the survey was submitted successfully?
+            return res.redirect("/take/list");
         } catch(error) {
             console.log("Error caught in ProcessTakeSurveyPage function!");
             console.log(error);

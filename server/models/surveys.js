@@ -7,6 +7,7 @@ const Schema = mongoose.Schema;
 const SurveySchema = new Schema({
     surveyName: String,
     surveyDescription: String,
+    surveyTakenCount: Number,
     surveyQuestions: [{ type: Schema.Types.ObjectId, ref: 'Question' }]
 }, {
     collection: "surveys"

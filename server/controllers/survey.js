@@ -43,6 +43,8 @@ module.exports = {
         // create a new survey and add it to the database.
         // First we need to create question objects from the questions submitted by the user.
         let questionArray = [];
+        // TODO: Instead of creating a new question every time, we should search to see if the
+        // same question already exists in the database. This stops excess objects and shares resources.
         for (const [key, value] of Object.entries(req.body.surveyQuestions)) {
             let newQuestion = new QuestionModel ({
                 "questionText": value,
@@ -57,10 +59,11 @@ module.exports = {
             questionArray.push(newQuestion);
         }
         // Now all our questions are stored inside questionArray
-        // Now we can create a survey model 
+        // Now we can create a survey model
         let newSurvey = new SurveyModel ({
             "surveyName": req.body.surveyName,
             "surveyDescription": req.body.surveyDescription,
+            "surveyTakenCount": 0,
             "surveyQuestions": questionArray
         });
         SurveyModel.create(newSurvey, (err) => {
@@ -102,7 +105,7 @@ module.exports = {
             "surveyName": req.body.surveyName,
             "surveyDescription": req.body.surveyDescription,
             "surveyQuestions": questionArray
-        })
+        });
 
         // After, we need to call SurveyModel.updateOne() to update the
         // correct Survey.
