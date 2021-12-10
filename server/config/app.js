@@ -32,7 +32,7 @@ const StoreOptions = {
   saveUninitialized: false,
   resave: false,
   cookie: {
-    maxAge: 600000
+    maxAge: 24 * 60 * 60 * 1000 // (hours)*(minutes)*(seconds)*(miliseconds)=24 hour cookie
   }
 }
 

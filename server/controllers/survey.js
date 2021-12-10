@@ -5,17 +5,32 @@ const QuestionModel = require("../models/question");
 // Read our collection and send it to the our survey list page
 module.exports = {
     // DISPLAY THE PAGE TO EDIT A SURVEY
-    DisplayEditPage: function(req, res) {
+    DisplayEditPage: async function(req, res) {
         // logic for displaying our page to edit surveys
         let id = req.params.id;
-        SurveyModel.findById(id, {}, {}, (err, surveyToEdit) => {
-            if (err) {
-                console.error(err);
-                res.end(err);
+        try {
+            const surveyToEdit = await SurveyModel.findById(id);
+            // Loop through the survey's question list to add each question it contains into an array which we send to the page
+            let questionArray = [];
+            for (let i = 0; i < surveyToEdit.surveyQuestions.length; i++) {
+                // now find the questions and add them to the array
+                try {
+                    const currentQuestion = await QuestionModel.findById(surveyToEdit.surveyQuestions[i]._id);
+                    questionArray.push(currentQuestion);
+                } catch (err) {
+                    console.error(err);
+                    console.log("Error with QuestionModel.findById inside DisplayEditPage.");
+                    return res.end(err);
+                }
             }
-            console.log("SURVEY TO EDIT: " + surveyToEdit);
-            res.render("content/survey/survey-edit", { title: "Survey Edit", page: "survey/edit", item: surveyToEdit, user: req.user });
-        });
+            // Finally, we render the page and send the needed content to it.
+            console.log("Question Array: ", questionArray);
+            return res.render("content/survey/survey-edit", { title: "Survey Edit", page: "survey/edit", item: surveyToEdit, questions: questionArray, user: req.user });
+        } catch (err) {
+            console.error(err);
+            console.log("Error with SurveyModel.findById inside DisplayEditPage.");
+            return res.end(err);
+        }
     },
     // DISPLAY THE PAGE TO ADD A SURVEY
     DisplayAddPage(req, res) {
